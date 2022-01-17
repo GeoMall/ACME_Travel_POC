@@ -1,5 +1,6 @@
 package com.API_Technical_Exercise.ACME_Travel_POC.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -12,15 +13,53 @@ import java.util.Date;
 @IdClass(flightListId.class)
 public class flightList implements Serializable {
     @Id
+    @Column(
+            name="flight_code",
+            nullable = false
+    )
     String flight_code;
+
     @Id
+    @Column(
+            name="departure_date",
+            nullable = false
+    )
     LocalDateTime departure_date;
 
+    @Column(
+            name="airline_name",
+            nullable = false
+    )
     String airline_name;
+
+    @Column(
+            name="departure_airport",
+            nullable = false
+    )
     String departure_airport;
+
+    @Column(
+            name="destination_airport",
+            nullable = false
+    )
     String destination_airport;
+
+    @Column(
+            name="aircraft_type",
+            nullable = false
+    )
     String aircraft_type;
+
+    @Column(
+            name="seat_availability",
+            nullable = false
+    )
     int seat_availability;
+
+    @Column(
+            name="price",
+            nullable = false
+    )
     double price;
 
     public flightList() {}
