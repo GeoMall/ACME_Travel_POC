@@ -4,15 +4,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
-@Entity(name="flightList")
+@Entity(name="flights_georgem123")
 @IdClass(flightListId.class)
 public class flightList implements Serializable {
     @Id
     String flight_code;
     @Id
-    Date departure_date;
+    LocalDateTime departure_date;
 
     String airline_name;
     String departure_airport;
@@ -23,7 +25,7 @@ public class flightList implements Serializable {
 
     public flightList() {}
 
-    public flightList(String flight_code, Date departure_date, String airline_name, String departure_airport, String destination_airport, String aircraft_type, int seat_availability, double price) {
+    public flightList(String flight_code, LocalDateTime departure_date, String airline_name, String departure_airport, String destination_airport, String aircraft_type, int seat_availability, double price) {
         this.flight_code = flight_code;
         this.departure_date = departure_date;
         this.airline_name = airline_name;
@@ -52,7 +54,7 @@ public class flightList implements Serializable {
         return new flightListId(flight_code,departure_date);
     }
 
-    public void setId(String flight_code, Date departure_date){
+    public void setId(String flight_code, LocalDateTime departure_date){
         this.flight_code = flight_code;
         this.departure_date = departure_date;
     }

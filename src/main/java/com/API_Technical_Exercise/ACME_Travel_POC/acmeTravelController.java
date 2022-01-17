@@ -7,8 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 @RestController
@@ -37,5 +42,21 @@ public class acmeTravelController {
         List<airport> airportList = new ArrayList<airport>();
         airportList = acmeTravelService.getDestinationAirportByName(pageNo,pageSize,airlineName);
         return new ResponseEntity<>(airportList, HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/simulateTicketPurchase", params = {"flightId", "departureDate"})
+    public void buyFlightSeat
+            (@RequestParam String flightId,
+             @RequestParam String departureDate)
+    {
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive()
+                .appendPattern("yyyy-MM-dd HH:mm:ss")
+                .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
+                .toFormatter(Locale.US);
+
+        LocalDateTime depDate;
+        depDate = LocalDateTime.parse(departureDate,formatter);
+        acmeTravelService.updateSeatAvailability(flightId,depDate);
     }
 }

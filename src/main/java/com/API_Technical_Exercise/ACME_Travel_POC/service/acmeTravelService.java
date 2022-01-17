@@ -2,14 +2,17 @@ package com.API_Technical_Exercise.ACME_Travel_POC.service;
 
 import com.API_Technical_Exercise.ACME_Travel_POC.model.airport;
 import com.API_Technical_Exercise.ACME_Travel_POC.model.flightList;
+import com.API_Technical_Exercise.ACME_Travel_POC.model.flightListId;
 import com.API_Technical_Exercise.ACME_Travel_POC.repo.acmeTravelRepo;
 import com.API_Technical_Exercise.ACME_Travel_POC.repo.airportRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
 
 
 @Service
@@ -32,6 +35,21 @@ public class acmeTravelService {
         System.out.println(airlineName);
         PageRequest page = PageRequest.of(pageNo, pageSize);
         return airportRepo.getDestinationAirport(airlineName, page);
+    }
+
+    public List<flightList> getFlightListById(String flightId, LocalDateTime departureDate){
+        flightListId flight = new flightListId(flightId,departureDate);
+        List<flightListId> flightListId = new ArrayList<flightListId>();
+        flightListId.add(flight);
+        return acmeTravelRepo.findAllById(flightListId);
+    }
+
+    public void updateSeatAvailability(String flightId, LocalDateTime departureDate)
+    {
+        List<flightList> flightList = getFlightListById(flightId,departureDate);
+
+        int newSeatAvailability = flightList.get(0).getSeat_availability()+1;
+        acmeTravelRepo.updateFlightSeatAvailability(newSeatAvailability, flightId);
     }
 
 }
