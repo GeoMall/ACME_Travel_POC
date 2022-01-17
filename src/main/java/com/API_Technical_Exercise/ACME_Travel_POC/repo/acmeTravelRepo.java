@@ -20,5 +20,10 @@ public interface acmeTravelRepo
     @Modifying
     @Query(value = "UPDATE airlines_sandbox.flights_georgem123 SET seat_availability = :seatAvailability WHERE flight_code = :flightCode", nativeQuery = true)
     void updateFlightSeatAvailability(int seatAvailability, String flightCode);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE airlines_sandbox.flights_georgem123 SET price = :newSeatPrice WHERE flight_code = :flightCode", nativeQuery = true)
+    void updateSeatPrice(double newSeatPrice, String flightCode);
 }
 

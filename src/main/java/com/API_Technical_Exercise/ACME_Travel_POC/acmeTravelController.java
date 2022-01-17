@@ -45,7 +45,7 @@ public class acmeTravelController {
     }
 
     @PatchMapping(value = "/simulateTicketPurchase", params = {"flightId", "departureDate"})
-    public void buyFlightSeat
+    public ResponseEntity<HttpStatus>  buyFlightSeat
             (@RequestParam String flightId,
              @RequestParam String departureDate)
     {
@@ -58,5 +58,24 @@ public class acmeTravelController {
         LocalDateTime depDate;
         depDate = LocalDateTime.parse(departureDate,formatter);
         acmeTravelService.updateSeatAvailability(flightId,depDate);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/amendFlightPrice", params = {"flightId", "departureDate", "newFlightPrice"})
+    public ResponseEntity<HttpStatus> changeTicketPrice
+            (@RequestParam String flightId,
+             @RequestParam String departureDate,
+             @RequestParam double newFlightPrice)
+    {
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive()
+                .appendPattern("yyyy-MM-dd HH:mm:ss")
+                .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
+                .toFormatter(Locale.US);
+
+        LocalDateTime depDate;
+        depDate = LocalDateTime.parse(departureDate,formatter);
+        acmeTravelService.updateFlightPrice(flightId,depDate,newFlightPrice);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
