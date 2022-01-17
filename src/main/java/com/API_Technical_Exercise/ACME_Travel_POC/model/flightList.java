@@ -21,8 +21,7 @@ public class flightList implements Serializable {
     int seat_availability;
     double price;
 
-    public flightList()
-    {}
+    public flightList() {}
 
     public flightList(String flight_code, Date departure_date, String airline_name, String departure_airport, String destination_airport, String aircraft_type, int seat_availability, double price) {
         this.flight_code = flight_code;

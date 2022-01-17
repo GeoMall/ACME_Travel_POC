@@ -13,3 +13,4 @@ public interface acmeTravelRepo
     @Query(value="SELECT * FROM airlines_sandbox.flights_georgem123 WHERE Departure_Date LIKE %:depDate%", nativeQuery = true)
     List<flightList> getFlightListByDate(String depDate);
 }
+
