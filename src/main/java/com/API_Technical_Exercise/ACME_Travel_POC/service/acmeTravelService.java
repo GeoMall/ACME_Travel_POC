@@ -1,11 +1,10 @@
 package com.API_Technical_Exercise.ACME_Travel_POC.service;
 
 import com.API_Technical_Exercise.ACME_Travel_POC.Exception.dataNotFoundException;
-import com.API_Technical_Exercise.ACME_Travel_POC.model.airport;
-import com.API_Technical_Exercise.ACME_Travel_POC.model.flightList;
-import com.API_Technical_Exercise.ACME_Travel_POC.model.flightListId;
+import com.API_Technical_Exercise.ACME_Travel_POC.model.*;
 import com.API_Technical_Exercise.ACME_Travel_POC.repo.acmeTravelRepo;
 import com.API_Technical_Exercise.ACME_Travel_POC.repo.airportRepo;
+import com.API_Technical_Exercise.ACME_Travel_POC.repo.routesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +21,13 @@ import java.util.List;
 public class acmeTravelService {
     private acmeTravelRepo acmeTravelRepo;
     private airportRepo airportRepo;
+    private routesRepo routesRepo;
 
     @Autowired
-    public acmeTravelService (acmeTravelRepo acmeTravelrpo, airportRepo airportRepo) {
+    public acmeTravelService (acmeTravelRepo acmeTravelrpo, airportRepo airportRepo, routesRepo routesRepo) {
         this.airportRepo = airportRepo;
         this.acmeTravelRepo = acmeTravelrpo;
+        this.routesRepo = routesRepo;
     }
 
     public List<flightList> getFlightListByDate(String depDate){
@@ -67,5 +68,35 @@ public class acmeTravelService {
         }
         acmeTravelRepo.updateSeatPrice(newPrice,flightList.get(0).getId().getFlight_code());
     }
+
+    public List<routes> getRouteById(int airlineId, int sourceAirportId, int destinationAirportId){
+        routesId route = new routesId(airlineId, sourceAirportId, destinationAirportId);
+        List<routesId> routesList = new ArrayList<routesId>();
+        routesList.add(route);
+        return routesRepo.findAllById(routesList);
+    }
+
+    public flightList insertNewRoute(flightList flight, LocalDateTime depTime, int airlineId, int sourceAirportId, int destinationAirportId){
+        List<routes> routesList = getRouteById(airlineId, sourceAirportId, destinationAirportId);
+        String flight_code;
+
+        if (routesList.isEmpty())
+        {
+            throw new dataNotFoundException("routes with airlineId: " + airlineId + ", sourceAirportId: " + ", destinationAirportId: " + destinationAirportId + " could not be found");
+        }
+
+        flight.setDeparture_airport(routesList.get(0).getSource_airport());
+        flight.setDestination_airport(routesList.get(0).getDestination_airport());
+
+        flight_code = routesList.get(0).getAirline() + airlineId;
+        flight.setId(flight_code,depTime);
+        flight.setAirline_name(routesRepo.getAirlineName(airlineId));
+
+        flight.setAircraft_type(routesRepo.getAirlineType(airlineId));
+
+        acmeTravelRepo.save(flight);
+        return flight;
+    }
+
 
 }

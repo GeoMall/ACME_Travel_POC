@@ -1,5 +1,6 @@
 package com.API_Technical_Exercise.ACME_Travel_POC.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -7,19 +8,75 @@ import java.io.Serializable;
 @Entity(name="airport")
 public class airport implements Serializable {
     @Id
+    @Column(
+            name="airport_id",
+            nullable = false
+    )
     int airport_ID;
+
+    @Column(
+            name="name"
+    )
     String name;
+
+    @Column(
+            name="city"
+    )
     String city;
+
+    @Column(
+            name="country"
+    )
     String country;
+
+    @Column(
+            name="iata"
+    )
     String iata;
+
+    @Column(
+            name="icao"
+    )
     String icao;
+
+    @Column(
+            name="latitude"
+    )
     double latitude;
+
+    @Column(
+            name="longitude"
+    )
     double longitude;
+
+    @Column(
+            name="altitude"
+    )
     int altitude;
+
+    @Column(
+            name="timezone"
+    )
     int timezone;
+
+    @Column(
+            name="dst"
+    )
     char dst;
+
+    @Column(
+            name="tz_timezone"
+    )
     String tz_timezone;
+
+    @Column(
+            name="type"
+    )
     String type;
+
+    @Column(
+            name="source"
+    )
     String source;
 
     public airport(){ }

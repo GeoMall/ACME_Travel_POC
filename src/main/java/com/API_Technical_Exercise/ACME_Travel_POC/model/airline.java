@@ -1,5 +1,6 @@
 package com.API_Technical_Exercise.ACME_Travel_POC.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -8,13 +9,45 @@ import java.io.Serializable;
 public class airline implements Serializable {
 
     @Id
+    @Column(
+            name="airline_id",
+            nullable = false
+    )
     int airline_id;
+
+    @Column(
+            name="name"
+    )
     String name;
+
+    @Column(
+            name="alias"
+    )
     String alias;
+
+    @Column(
+            name="iata"
+    )
     String iata;
+
+    @Column(
+            name="icao"
+    )
     String icao;
+
+    @Column(
+            name="callsign"
+    )
     String callsign;
+
+    @Column(
+            name="country"
+    )
     String country;
+
+    @Column(
+            name="active"
+    )
     boolean active;
 
     public airline(){}

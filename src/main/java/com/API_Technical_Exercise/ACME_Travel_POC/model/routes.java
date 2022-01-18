@@ -1,5 +1,6 @@
 package com.API_Technical_Exercise.ACME_Travel_POC.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -9,17 +10,60 @@ import java.io.Serializable;
 @IdClass(routesId.class)
 public class routes implements Serializable {
     @Id
+    @Column(
+            name="airline_id",
+            nullable = false
+    )
     int airline_id;
+
     @Id
+    @Column(
+            name="source_airport_id",
+            nullable = false
+    )
     int source_airport_id;
+
     @Id
+    @Column(
+            name="destination_airport_id",
+            nullable = false
+    )
     int destination_airport_id;
 
-    String Airline;
+    @Column(
+            name="airline",
+            nullable = false
+    )
+    String airline;
+
+    @Column(
+            name="source_airport",
+            nullable = false
+    )
     String source_airport;
+
+    @Column(
+            name="destination_airport",
+            nullable = false
+    )
     String destination_airport;
+
+    @Column(
+            name="codeshare",
+            nullable = true
+    )
     String codeshare;
+
+    @Column(
+            name="stops",
+            nullable = true
+    )
     int stops;
+
+    @Column(
+            name="equipment",
+            nullable = true
+    )
     String equipment;
 
     public routes(){}
@@ -28,7 +72,7 @@ public class routes implements Serializable {
         this.airline_id = airline_id;
         this.source_airport_id = source_airport_id;
         this.destination_airport_id = destination_airport_id;
-        Airline = airline;
+        this.airline = airline;
         this.source_airport = source_airport;
         this.destination_airport = destination_airport;
         this.codeshare = codeshare;
@@ -49,11 +93,11 @@ public class routes implements Serializable {
     }
 
     public String getAirline() {
-        return Airline;
+        return airline;
     }
 
     public void setAirline(String airline) {
-        Airline = airline;
+        this.airline = airline;
     }
 
     public String getSource_airport() {
