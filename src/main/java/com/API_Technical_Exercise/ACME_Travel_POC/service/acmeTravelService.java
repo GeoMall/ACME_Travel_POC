@@ -7,10 +7,8 @@ import com.API_Technical_Exercise.ACME_Travel_POC.repo.airportRepo;
 import com.API_Technical_Exercise.ACME_Travel_POC.repo.routesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +29,10 @@ public class acmeTravelService {
     }
 
     public List<flightList> getFlightListByDate(String depDate){
-        System.out.println(depDate);
         return acmeTravelRepo.getFlightListByDate(depDate);
     }
 
     public List<airport> getDestinationAirportByName(int pageNo, int pageSize, String airlineName){
-        System.out.println(airlineName);
         PageRequest page = PageRequest.of(pageNo, pageSize);
         return airportRepo.getDestinationAirport(airlineName, page);
     }
@@ -56,17 +52,18 @@ public class acmeTravelService {
             throw new dataNotFoundException("Flight by code: " + flightId + " was not found");
         }
         int newSeatAvailability = flightList.get(0).getSeat_availability()+1;
-        acmeTravelRepo.updateFlightSeatAvailability(newSeatAvailability, flightId);
+        acmeTravelRepo.updateFlightSeatAvailability(newSeatAvailability, flightId, departureDate.toString());
     }
 
     public void updateFlightPrice(String flightId, LocalDateTime departureDate, double newPrice){
+       //checking if flight exists
         List<flightList> flightList = getFlightListById(flightId,departureDate);
 
         if(flightList.isEmpty())
         {
             throw new dataNotFoundException("Flight by code: " + flightId + " was not found");
         }
-        acmeTravelRepo.updateSeatPrice(newPrice,flightList.get(0).getId().getFlight_code());
+        acmeTravelRepo.updateSeatPrice(newPrice,flightId, departureDate.toString());
     }
 
     public List<routes> getRouteById(int airlineId, int sourceAirportId, int destinationAirportId){

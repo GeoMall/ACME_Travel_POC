@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-@Entity(name="airport")
+@Entity(name="airports")
 public class airport implements Serializable {
     @Id
     @Column(

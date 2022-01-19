@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface routesRepo extends JpaRepository<routes, routesId> {
 
     @Query(value = "SELECT distinct b.name FROM airlines_sandbox.airlines b\n" +
-            "INNER JOIN  airlines_sandbox.routes a ON a.Airline_ID = b.Airline_ID WHERE b.Airline_ID = :airlineId", nativeQuery = true)
+            "WHERE b.Airline_ID = :airlineId", nativeQuery = true)
     public String getAirlineName(int airlineId);
 
     @Query(value = "SELECT distinct b.Model FROM airlines_sandbox.routes a\n" +
