@@ -61,7 +61,7 @@ public class acmeTravelController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = "/insertNewFlight", params = {"airlineId", "sourceAirportId", "destinationAirportId", "departureDate", "seatAvailability", "price"})
+    @PostMapping(value = "/insertNewFlight", params = {"airlineId", "sourceAirportId", "destinationAirportId", "departureDate", "seatAvailability", "price"})
     public ResponseEntity<flightList> insertNewFlight
             (@RequestParam int airlineId,
              @RequestParam int sourceAirportId,
