@@ -1,13 +1,15 @@
 package com.API_Technical_Exercise.ACME_Travel_POC.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 public class flightListId implements Serializable {
     private String flight_code;
-    private Date departure_date;
+    private LocalDateTime departure_date;
 
-    public flightListId(String flight_code, Date departure_date) {
+    public flightListId(String flight_code, LocalDateTime departure_date) {
         this.flight_code = flight_code;
         this.departure_date = departure_date;
     }
@@ -23,11 +25,11 @@ public class flightListId implements Serializable {
         this.flight_code = flight_code;
     }
 
-    public Date getDeparture_date() {
+    public LocalDateTime getDeparture_date() {
         return departure_date;
     }
 
-    public void setDeparture_date(Date departure_date) {
+    public void setDeparture_date(LocalDateTime departure_date) {
         this.departure_date = departure_date;
     }
 }
