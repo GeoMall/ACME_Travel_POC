@@ -80,7 +80,7 @@ class acmeTravelServiceTest {
         Mockito.doReturn(list).when(acmeTravelServiceSpy).getFlightListById(flightId,convertDate(depDate));
         acmeTravelServiceSpy.updateSeatAvailability(flightId, convertDate(depDate));
 
-        verify(acmeTravelRepo).updateFlightSeatAvailability(flightList.getSeat_availability()+1,flightId,convertDate(depDate).toString());
+        verify(acmeTravelRepo).updateFlightSeatAvailability(flightList.getSeat_availability()-1,flightId,convertDate(depDate).toString());
     }
 
     @Test
