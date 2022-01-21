@@ -51,7 +51,7 @@ public class acmeTravelService {
         {
             throw new dataNotFoundException("Flight by code: " + flightId + " was not found");
         }
-        int newSeatAvailability = flightList.get(0).getSeat_availability()+1;
+        int newSeatAvailability = flightList.get(0).getSeat_availability()-1;
         acmeTravelRepo.updateFlightSeatAvailability(newSeatAvailability, flightId, departureDate.toString());
     }
 
